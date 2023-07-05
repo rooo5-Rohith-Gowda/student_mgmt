@@ -1,0 +1,24 @@
+require 'devise/jwt'
+
+class User < ApplicationRecord
+  include Devise::JWT::RevocationStrategies::JTIMatcher
+  has_one :academic
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable, 
+         :jwt_authenticatable, jwt_revocation_strategy: self
+
+  validates :first_name, :last_name, :email, :gender, :role, :date_of_birth, :country, :city, :state, :address, presence: true
+  validates :password, presence: true, length: {minimum: 8}
+  validates :full_phone_number, presence: true, format: { with: /\A\+\d{12}\z/, message: "Invalid format" } 
+
+  
+  def jwt_payload
+    super
+  end
+
+  def generate_jwt
+    JWT.encode(jwt_payload, Rails.application.credentials.secret_key_base )
+  end
+end
