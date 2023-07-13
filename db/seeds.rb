@@ -5,9 +5,4 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-# AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
-
-Option.create(choice:"0", assessment_question_id: 1 )
-Option.create(choice:"1", assessment_question_id: 1 )
-Option.create(choice:"2", assessment_question_id: 1 )
-Option.create(choice:"3", assessment_question_id: 1 )
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?

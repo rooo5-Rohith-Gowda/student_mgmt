@@ -31,7 +31,7 @@
           null,
           null,
           null,
-          null,
+          1,
           null,
           null
         ]
@@ -1050,6 +1050,7 @@
           null,
           1,
           1,
+          1,
           null
         ]
       },
@@ -1091,7 +1092,7 @@
       "C:/Assignment/own_project/app/controllers/application_controller.rb": {
         "lines": [
           1,
-          13,
+          7,
           null
         ]
       },
@@ -1132,6 +1133,12 @@
         ]
       },
       "C:/Assignment/own_project/app/helpers/options_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "C:/Assignment/own_project/app/helpers/payments_helper.rb": {
         "lines": [
           1,
           null
@@ -1270,6 +1277,25 @@
           null,
           1,
           null,
+          null
+        ]
+      },
+      "C:/Assignment/own_project/spec/helpers/payments_helper_spec.rb": {
+        "lines": [
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
           null
         ]
       },
@@ -2328,6 +2354,17 @@
           null
         ]
       },
+      "C:/Assignment/own_project/spec/requests/payments_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null
+        ]
+      },
       "C:/Assignment/own_project/spec/requests/qualifications_spec.rb": {
         "lines": [
           1,
@@ -3145,6 +3182,7 @@
       "C:/Assignment/own_project/app/controllers/qualifications_controller.rb": {
         "lines": [
           1,
+          1,
           null,
           null,
           1,
@@ -3246,6 +3284,6 @@
         ]
       }
     },
-    "timestamp": 1688536628
+    "timestamp": 1689076176
   }
 }

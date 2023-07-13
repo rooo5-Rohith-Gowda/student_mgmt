@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  post "/hello", to: "pages#hello"
+  root 'pages#home'
   devise_for :users, :controllers => {
     sessions: 'users/sessions', registrations: 'users/registrations'
   }
@@ -27,4 +29,5 @@ Rails.application.routes.draw do
     end
     resources :assessment_questions, only: [:index, :create, :update, :show, :destroy]
     resources :options, only: [:create, :update, :index]
+    post '/payments', to: 'payments#create'
 end
