@@ -1,7 +1,7 @@
 {
   "RSpec": {
     "coverage": {
-      "C:/Assignment/own_project/config/environment.rb": {
+      "C:/Users/rg962/student_mgmt/config/environment.rb": {
         "lines": [
           null,
           1,
@@ -10,7 +10,7 @@
           1
         ]
       },
-      "C:/Assignment/own_project/config/application.rb": {
+      "C:/Users/rg962/student_mgmt/config/application.rb": {
         "lines": [
           1,
           null,
@@ -36,7 +36,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/config/boot.rb": {
+      "C:/Users/rg962/student_mgmt/config/boot.rb": {
         "lines": [
           1,
           null,
@@ -44,7 +44,7 @@
           1
         ]
       },
-      "C:/Assignment/own_project/config/environments/test.rb": {
+      "C:/Users/rg962/student_mgmt/config/environments/test.rb": {
         "lines": [
           1,
           null,
@@ -108,7 +108,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/config/initializers/active_admin.rb": {
+      "C:/Users/rg962/student_mgmt/config/initializers/active_admin.rb": {
         "lines": [
           1,
           null,
@@ -464,7 +464,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/config/initializers/assets.rb": {
+      "C:/Users/rg962/student_mgmt/config/initializers/assets.rb": {
         "lines": [
           null,
           null,
@@ -480,383 +480,8 @@
           null
         ]
       },
-      "C:/Assignment/own_project/config/initializers/content_security_policy.rb": {
+      "C:/Users/rg962/student_mgmt/config/initializers/content_security_policy.rb": {
         "lines": [
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null
-        ]
-      },
-      "C:/Assignment/own_project/config/initializers/cors.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          null,
-          1,
-          null,
-          null,
-          null,
-          null,
-          null
-        ]
-      },
-      "C:/Assignment/own_project/config/initializers/devise.rb": {
-        "lines": [
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          null,
-          null,
-          null,
-          null,
-          1,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          null,
-          null,
-          null,
-          null,
-          1,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          null,
-          null,
-          1,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          1,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          1,
-          1,
-          null,
-          null,
-          1,
-          null,
-          null,
-          1,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
           null,
           null,
           null,
@@ -884,7 +509,382 @@
           null
         ]
       },
-      "C:/Assignment/own_project/config/initializers/filter_parameter_logging.rb": {
+      "C:/Users/rg962/student_mgmt/config/initializers/cors.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "C:/Users/rg962/student_mgmt/config/initializers/devise.rb": {
+        "lines": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "C:/Users/rg962/student_mgmt/config/initializers/filter_parameter_logging.rb": {
         "lines": [
           null,
           null,
@@ -896,7 +896,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/config/initializers/inflections.rb": {
+      "C:/Users/rg962/student_mgmt/config/initializers/inflections.rb": {
         "lines": [
           null,
           null,
@@ -916,7 +916,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/config/initializers/permissions_policy.rb": {
+      "C:/Users/rg962/student_mgmt/config/initializers/permissions_policy.rb": {
         "lines": [
           null,
           null,
@@ -931,7 +931,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/spec/factories/academics.rb": {
+      "C:/Users/rg962/student_mgmt/spec/factories/academics.rb": {
         "lines": [
           1,
           1,
@@ -950,7 +950,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/spec/factories/assessment_questions.rb": {
+      "C:/Users/rg962/student_mgmt/spec/factories/assessment_questions.rb": {
         "lines": [
           1,
           1,
@@ -962,7 +962,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/spec/factories/assessments.rb": {
+      "C:/Users/rg962/student_mgmt/spec/factories/assessments.rb": {
         "lines": [
           1,
           1,
@@ -971,7 +971,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/spec/factories/interests.rb": {
+      "C:/Users/rg962/student_mgmt/spec/factories/interests.rb": {
         "lines": [
           1,
           1,
@@ -980,7 +980,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/spec/factories/options.rb": {
+      "C:/Users/rg962/student_mgmt/spec/factories/options.rb": {
         "lines": [
           1,
           1,
@@ -990,7 +990,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/spec/factories/qualifications.rb": {
+      "C:/Users/rg962/student_mgmt/spec/factories/qualifications.rb": {
         "lines": [
           1,
           1,
@@ -999,7 +999,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/spec/factories/users.rb": {
+      "C:/Users/rg962/student_mgmt/spec/factories/users.rb": {
         "lines": [
           1,
           1,
@@ -1019,8 +1019,10 @@
           null
         ]
       },
-      "C:/Assignment/own_project/config/routes.rb": {
+      "C:/Users/rg962/student_mgmt/config/routes.rb": {
         "lines": [
+          1,
+          1,
           1,
           1,
           null,
@@ -1054,7 +1056,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/app/models/user.rb": {
+      "C:/Users/rg962/student_mgmt/app/models/user.rb": {
         "lines": [
           1,
           null,
@@ -1071,6 +1073,9 @@
           1,
           1,
           null,
+          1,
+          null,
+          1,
           null,
           1,
           4,
@@ -1082,81 +1087,87 @@
           null
         ]
       },
-      "C:/Assignment/own_project/app/models/application_record.rb": {
+      "C:/Users/rg962/student_mgmt/app/models/application_record.rb": {
         "lines": [
           1,
           1,
           null
         ]
       },
-      "C:/Assignment/own_project/app/controllers/application_controller.rb": {
+      "C:/Users/rg962/student_mgmt/app/controllers/application_controller.rb": {
         "lines": [
           1,
           7,
           null
         ]
       },
-      "C:/Assignment/own_project/app/helpers/application_helper.rb": {
+      "C:/Users/rg962/student_mgmt/app/helpers/application_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "C:/Assignment/own_project/app/helpers/academics_helper.rb": {
+      "C:/Users/rg962/student_mgmt/app/helpers/academics_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "C:/Assignment/own_project/app/helpers/accounts_helper.rb": {
+      "C:/Users/rg962/student_mgmt/app/helpers/accounts_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "C:/Assignment/own_project/app/helpers/assessment_questions_helper.rb": {
+      "C:/Users/rg962/student_mgmt/app/helpers/assessment_questions_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "C:/Assignment/own_project/app/helpers/assessments_helper.rb": {
+      "C:/Users/rg962/student_mgmt/app/helpers/assessments_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "C:/Assignment/own_project/app/helpers/interests_helper.rb": {
+      "C:/Users/rg962/student_mgmt/app/helpers/interests_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "C:/Assignment/own_project/app/helpers/options_helper.rb": {
+      "C:/Users/rg962/student_mgmt/app/helpers/options_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "C:/Assignment/own_project/app/helpers/payments_helper.rb": {
+      "C:/Users/rg962/student_mgmt/app/helpers/pages_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "C:/Assignment/own_project/app/helpers/qualifications_helper.rb": {
+      "C:/Users/rg962/student_mgmt/app/helpers/payments_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "C:/Assignment/own_project/app/helpers/users_helper.rb": {
+      "C:/Users/rg962/student_mgmt/app/helpers/qualifications_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "C:/Assignment/own_project/app/models/admin_user.rb": {
+      "C:/Users/rg962/student_mgmt/app/helpers/users_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "C:/Users/rg962/student_mgmt/app/models/admin_user.rb": {
         "lines": [
           1,
           null,
@@ -1166,7 +1177,65 @@
           null
         ]
       },
-      "C:/Assignment/own_project/app/admin/admin_users.rb": {
+      "C:/Users/rg962/student_mgmt/app/admin/academics.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null
+        ]
+      },
+      "C:/Users/rg962/student_mgmt/app/models/academic.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null
+        ]
+      },
+      "C:/Users/rg962/student_mgmt/app/admin/admin_users.rb": {
         "lines": [
           1,
           1,
@@ -1198,7 +1267,68 @@
           null
         ]
       },
-      "C:/Assignment/own_project/app/admin/dashboard.rb": {
+      "C:/Users/rg962/student_mgmt/app/admin/assessment_questions.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null
+        ]
+      },
+      "C:/Users/rg962/student_mgmt/app/models/assessment_question.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          null
+        ]
+      },
+      "C:/Users/rg962/student_mgmt/app/admin/assessments.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null
+        ]
+      },
+      "C:/Users/rg962/student_mgmt/app/models/assessment.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null
+        ]
+      },
+      "C:/Users/rg962/student_mgmt/app/admin/dashboard.rb": {
         "lines": [
           null,
           1,
@@ -1235,14 +1365,117 @@
           null
         ]
       },
-      "C:/Assignment/own_project/spec/support/factory_bot.rb": {
+      "C:/Users/rg962/student_mgmt/app/admin/interests.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null
+        ]
+      },
+      "C:/Users/rg962/student_mgmt/app/models/interest.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          null
+        ]
+      },
+      "C:/Users/rg962/student_mgmt/app/admin/options.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          null
+        ]
+      },
+      "C:/Users/rg962/student_mgmt/app/models/option.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          null
+        ]
+      },
+      "C:/Users/rg962/student_mgmt/app/admin/qualifications.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null
+        ]
+      },
+      "C:/Users/rg962/student_mgmt/app/models/qualification.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          null
+        ]
+      },
+      "C:/Users/rg962/student_mgmt/app/admin/users.rb": {
+        "lines": [
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "C:/Users/rg962/student_mgmt/spec/support/factory_bot.rb": {
         "lines": [
           1,
           1,
           null
         ]
       },
-      "C:/Assignment/own_project/spec/helpers/assessments_helper_spec.rb": {
+      "C:/Users/rg962/student_mgmt/spec/helpers/assessments_helper_spec.rb": {
         "lines": [
           1,
           null,
@@ -1261,7 +1494,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/spec/helpers/options_helper_spec.rb": {
+      "C:/Users/rg962/student_mgmt/spec/helpers/options_helper_spec.rb": {
         "lines": [
           1,
           null,
@@ -1280,7 +1513,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/spec/helpers/payments_helper_spec.rb": {
+      "C:/Users/rg962/student_mgmt/spec/helpers/pages_helper_spec.rb": {
         "lines": [
           1,
           null,
@@ -1295,11 +1528,30 @@
           null,
           null,
           1,
-          1,
+          null,
           null
         ]
       },
-      "C:/Assignment/own_project/spec/models/academic_spec.rb": {
+      "C:/Users/rg962/student_mgmt/spec/helpers/payments_helper_spec.rb": {
+        "lines": [
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null
+        ]
+      },
+      "C:/Users/rg962/student_mgmt/spec/models/academic_spec.rb": {
         "lines": [
           1,
           null,
@@ -1385,21 +1637,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/app/models/academic.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          null,
-          1,
-          null,
-          null
-        ]
-      },
-      "C:/Assignment/own_project/spec/models/assessment_question_spec.rb": {
+      "C:/Users/rg962/student_mgmt/spec/models/assessment_question_spec.rb": {
         "lines": [
           1,
           null,
@@ -1434,17 +1672,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/app/models/assessment_question.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          1,
-          1,
-          null
-        ]
-      },
-      "C:/Assignment/own_project/spec/models/assessment_spec.rb": {
+      "C:/Users/rg962/student_mgmt/spec/models/assessment_spec.rb": {
         "lines": [
           1,
           null,
@@ -1467,15 +1695,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/app/models/assessment.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          null
-        ]
-      },
-      "C:/Assignment/own_project/spec/models/interest_spec.rb": {
+      "C:/Users/rg962/student_mgmt/spec/models/interest_spec.rb": {
         "lines": [
           1,
           null,
@@ -1499,16 +1719,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/app/models/interest.rb": {
-        "lines": [
-          1,
-          1,
-          null,
-          1,
-          null
-        ]
-      },
-      "C:/Assignment/own_project/spec/models/option_spec.rb": {
+      "C:/Users/rg962/student_mgmt/spec/models/option_spec.rb": {
         "lines": [
           1,
           null,
@@ -1530,16 +1741,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/app/models/option.rb": {
-        "lines": [
-          1,
-          1,
-          null,
-          1,
-          null
-        ]
-      },
-      "C:/Assignment/own_project/spec/models/qualification_spec.rb": {
+      "C:/Users/rg962/student_mgmt/spec/models/qualification_spec.rb": {
         "lines": [
           1,
           null,
@@ -1560,16 +1762,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/app/models/qualification.rb": {
-        "lines": [
-          1,
-          1,
-          null,
-          1,
-          null
-        ]
-      },
-      "C:/Assignment/own_project/spec/models/user_spec.rb": {
+      "C:/Users/rg962/student_mgmt/spec/models/user_spec.rb": {
         "lines": [
           1,
           null,
@@ -1678,7 +1871,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/spec/requests/academics_spec.rb": {
+      "C:/Users/rg962/student_mgmt/spec/requests/academics_spec.rb": {
         "lines": [
           1,
           null,
@@ -1734,7 +1927,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/spec/requests/assessment_questions_spec.rb": {
+      "C:/Users/rg962/student_mgmt/spec/requests/assessment_questions_spec.rb": {
         "lines": [
           1,
           null,
@@ -1920,7 +2113,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/spec/requests/assessments_spec.rb": {
+      "C:/Users/rg962/student_mgmt/spec/requests/assessments_spec.rb": {
         "lines": [
           1,
           null,
@@ -2156,7 +2349,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/spec/requests/interests_spec.rb": {
+      "C:/Users/rg962/student_mgmt/spec/requests/interests_spec.rb": {
         "lines": [
           1,
           null,
@@ -2236,7 +2429,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/spec/requests/options_spec.rb": {
+      "C:/Users/rg962/student_mgmt/spec/requests/options_spec.rb": {
         "lines": [
           1,
           null,
@@ -2354,18 +2547,33 @@
           null
         ]
       },
-      "C:/Assignment/own_project/spec/requests/payments_spec.rb": {
+      "C:/Users/rg962/student_mgmt/spec/requests/pages_spec.rb": {
         "lines": [
-          1,
           null,
-          1,
-          1,
-          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
           null,
           null
         ]
       },
-      "C:/Assignment/own_project/spec/requests/qualifications_spec.rb": {
+      "C:/Users/rg962/student_mgmt/spec/requests/payments_spec.rb": {
+        "lines": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "C:/Users/rg962/student_mgmt/spec/requests/qualifications_spec.rb": {
         "lines": [
           1,
           null,
@@ -2447,7 +2655,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/spec/requests/users/registrations_spec.rb": {
+      "C:/Users/rg962/student_mgmt/spec/requests/users/registrations_spec.rb": {
         "lines": [
           1,
           null,
@@ -2535,7 +2743,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/app/controllers/users/registrations_controller.rb": {
+      "C:/Users/rg962/student_mgmt/app/controllers/users/registrations_controller.rb": {
         "lines": [
           1,
           null,
@@ -2600,7 +2808,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/spec/requests/users_spec.rb": {
+      "C:/Users/rg962/student_mgmt/spec/requests/users_spec.rb": {
         "lines": [
           1,
           null,
@@ -2632,7 +2840,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/app/controllers/users_controller.rb": {
+      "C:/Users/rg962/student_mgmt/app/controllers/users_controller.rb": {
         "lines": [
           1,
           1,
@@ -2658,7 +2866,16 @@
           null
         ]
       },
-      "C:/Assignment/own_project/app/controllers/academics_controller.rb": {
+      "C:/Users/rg962/student_mgmt/spec/views/pages/home.html.erb_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          null,
+          null
+        ]
+      },
+      "C:/Users/rg962/student_mgmt/app/controllers/academics_controller.rb": {
         "lines": [
           1,
           1,
@@ -2729,7 +2946,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/app/controllers/assessment_questions_controller.rb": {
+      "C:/Users/rg962/student_mgmt/app/controllers/assessment_questions_controller.rb": {
         "lines": [
           1,
           1,
@@ -2842,7 +3059,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/app/controllers/assessments_controller.rb": {
+      "C:/Users/rg962/student_mgmt/app/controllers/assessments_controller.rb": {
         "lines": [
           1,
           1,
@@ -3002,7 +3219,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/app/controllers/interests_controller.rb": {
+      "C:/Users/rg962/student_mgmt/app/controllers/interests_controller.rb": {
         "lines": [
           1,
           null,
@@ -3106,7 +3323,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/app/controllers/options_controller.rb": {
+      "C:/Users/rg962/student_mgmt/app/controllers/options_controller.rb": {
         "lines": [
           1,
           1,
@@ -3179,7 +3396,7 @@
           null
         ]
       },
-      "C:/Assignment/own_project/app/controllers/qualifications_controller.rb": {
+      "C:/Users/rg962/student_mgmt/app/controllers/qualifications_controller.rb": {
         "lines": [
           1,
           1,
@@ -3284,6 +3501,6 @@
         ]
       }
     },
-    "timestamp": 1689076176
+    "timestamp": 1689328663
   }
 }

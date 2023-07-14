@@ -17,17 +17,31 @@ class AcademicsController < ApplicationController
     end
 
     def create
-        @academic = Academic.new(academic_params)
-        if @academic.save
-            render json: {
+        token = request.headers['token']&.split&.last
+        payload= JWT.decode(token, nil, false).first
+        p payload
+
+        if payload.present? && payload['exp'] >= Time.now.to_i
+            user = User.find_by(id: payload['sub'])
+            if user.present?
+            @academic = Academic.new(academic_params)
+            @academic.user_id = user.id
+            if @academic.save
+                render json: {
                 message: "Academics Created Successfully",
                 academic: @academic
-            }, status: 200
+                }, status: 200
+            else
+                render json: {
+                message: "Unprocessable Entity"
+                }, status: 422
+            end
         else
-            render json: {
-                message: "Unprosseable Entity"
-            }, status: 422
+          render json: {
+            message: "Invalid token or user not found"
+          }, status: 404
         end
+      end
     end
 
     # def update
@@ -56,6 +70,10 @@ class AcademicsController < ApplicationController
     # end
 
     private
+
+    rescue_from JWT::DecodeError do
+        render json: { message: 'Invalid token' }, status: :unprocessable_entity
+    end
 
     # def set_academics
     #     @academic = Academic.find(params[:id])

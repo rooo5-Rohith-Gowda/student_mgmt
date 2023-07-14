@@ -102,6 +102,10 @@ GEM
     case_transform (0.2)
       activesupport
     concurrent-ruby (1.2.2)
+    countries (5.5.0)
+      unaccent (~> 0.3)
+    country_select (8.0.1)
+      countries (~> 5.0)
     crass (1.0.6)
     date (3.3.3)
     debug (1.8.0)
@@ -327,6 +331,7 @@ GEM
       concurrent-ruby (~> 1.0)
     tzinfo-data (1.2023.3)
       tzinfo (>= 1.0.0)
+    unaccent (0.4.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     warden-jwt_auth (0.8.0)
@@ -360,6 +365,7 @@ DEPENDENCIES
   activestorage
   bootsnap
   capybara
+  country_select
   debug
   devise
   devise-jwt

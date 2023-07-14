@@ -13,6 +13,9 @@ class User < ApplicationRecord
   validates :password, presence: true, length: {minimum: 8}
   validates :full_phone_number, presence: true, format: { with: /\A\+\d{12}\z/, message: "Invalid format" } 
 
+  enum role: { student: "student", admin: "admin", teacher: "teacher"}
+
+  enum gender: { male: "male", female: "female", others: "others"}
   
   def jwt_payload
     super

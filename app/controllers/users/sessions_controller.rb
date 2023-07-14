@@ -6,7 +6,7 @@ class Users::SessionsController < Devise::SessionsController
 
   def create
     user = User.find_by(email: params[:user][:email])
-    
+
     if user && user.valid_password?(params[:user][:password])
       if user.role == 'admin'
         sign_in user
@@ -30,17 +30,38 @@ class Users::SessionsController < Devise::SessionsController
       end
     else
       render json: {
-        message: "Invalid password or email"
+        message: 'Invalid password or email'
       }, status: 401
     end
   end
-  
+
+  def destroy
+    token = request.headers['token']&.split&.last
+    decoded_token = JWT.decode(token, nil, false)
+    payload = decoded_token.first
+
+    if payload.present? && payload['exp'] >= Time.now.to_i
+      user = User.find_by(payload['sub'])
+      if user.present?
+        sign_out user
+        render json: { message: 'Logged out successfully' }, status: :ok
+      else
+        render json: { message: 'Invalid user' }, status: :unprocessable_entity
+      end
+    else
+      render json: { message: 'Invalid token' }, status: :unprocessable_entity
+    end
+  end
 
   private
 
+  rescue_from JWT::DecodeError do
+    render json: { message: 'Invalid token' }, status: :unprocessable_entity
+  end
+
   def respond_with(resource, _opts = {})
     render json: {
-      status: {code: 200, message: 'Logged in sucessfully.'},
+      status: { code: 200, message: 'Logged in successfully.' },
       data: resource
     }
   end
@@ -49,7 +70,7 @@ class Users::SessionsController < Devise::SessionsController
     if current_user
       render json: {
         status: 200,
-        message: "logged out successfully"
+        message: 'Logged out successfully'
       }, status: :ok
     else
       render json: {
