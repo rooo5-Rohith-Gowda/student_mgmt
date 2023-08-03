@@ -2,13 +2,15 @@ require 'rails_helper'
 
 RSpec.describe Academic, type: :feature do
   let(:admin_user) { FactoryBot.create(:admin_user) }
-  let!(:interest) { FactoryBot.create(:interest, name: "Computer Science") }
+  let!(:interest) { FactoryBot.create(:interest, name: "Computer  Science") }
   let!(:qualification) { FactoryBot.create(:qualification, name: "Bachelor's Degree") }
   let!(:user) { FactoryBot.create(:user) }
 
   before do
     login_as(admin_user, scope: :admin_user)
   end
+
+  CN = "Computer  Science"
 
   describe "Academic Index Page" do
     it "displays academic details correctly" do
@@ -17,7 +19,7 @@ RSpec.describe Academic, type: :feature do
       visit admin_academics_path
 
       expect(page).to have_content("ABC College")
-      expect(page).to have_content("Computer Science")
+      expect(page).to have_content(CN)
       expect(page).to have_content("Bachelor's Degree")
       expect(page).to have_content(user.email)
     end
@@ -28,7 +30,7 @@ RSpec.describe Academic, type: :feature do
       visit new_admin_academic_path
 
       fill_in "College name", with: "XYZ University"
-      select "Computer Science", from: "Interest"
+      select CN, from: "Interest"
       select("Computer Science and Engineering", from: "academic_qualification_id")
 
       fill_in "Language", with: "Become a Software Engineer"
@@ -69,7 +71,7 @@ RSpec.describe Academic, type: :feature do
       visit admin_academic_path(academic)
 
       expect(page).to have_content("XYZ University")
-      expect(page).to have_content("Computer Science")
+      expect(page).to have_content(CN)
       expect(page).to have_content("Bachelor's Degree")
       expect(page).to have_content(user.email)
     end
