@@ -73,7 +73,7 @@ RSpec.describe InterestsController, type: :controller do
           post :create, params: { interest: invalid_params }
 
           expect(response).to have_http_status(422)
-          expect(JSON.parse(response.body)['message']).to eq('Unprocessable Entity')
+          expect(JSON.parse(response.body)['message']).to eq('Unprosseable Entity')
         end
       end
     end
