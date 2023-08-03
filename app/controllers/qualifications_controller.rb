@@ -1,9 +1,11 @@
 class QualificationsController < ApplicationController
-    skip_before_action :verify_authenticity_token
+    # skip_before_action :verify_authenticity_token
     # before_action :set_qualification, only: [:show, :edit, :update]
+    before_action :check_user
 
     def index
-        if current_user.role == "admin"
+        user = auth_user
+        if user.role == "admin"
             @qualifications = Qualification.all
             if @qualifications.empty?
                 render json: {
@@ -28,7 +30,8 @@ class QualificationsController < ApplicationController
     # end
 
     def create
-        if current_user.role == "admin"
+        user = auth_user
+        if user.role == "admin"
             @qualification = Qualification.new(qualification_params)
             if @qualification.save
                 render json: {

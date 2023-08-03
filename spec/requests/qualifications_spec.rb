@@ -1,75 +1,101 @@
 require 'rails_helper'
 
-RSpec.describe "Qualification", type: :request do
-  include Devise::Test::IntegrationHelpers
-
-  let(:admin_user) { FactoryBot.create(:user, role: "admin") }
-  let(:teacher_user) { FactoryBot.create(:user, role: "teacher") }
-
-  let(:qualification) { FactoryBot.create(:qualification) }
-  describe "GET /index" do
+RSpec.describe QualificationsController, type: :controller do
+  describe 'GET #index' do
     context 'when the user is admin' do
+      let(:admin_user) { FactoryBot.create(:user, role: "admin") }
+      let(:token) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
+
       before do
-        sign_in admin_user
+        request.headers['token'] = token
       end
 
-      it 'returns all the qualifications present if present' do
-        qualification1 = create(:qualification)
-        qualification2 = create(:qualification)
+      it 'returns all the qualification present if present' do
+        qualification1 = FactoryBot.create(:qualification)
+        qualification = FactoryBot.create(:qualification)
 
-        get '/qualifications'
+        get :index
 
         expect(response).to have_http_status(200)
+        expect(JSON.parse(response.body)['message']).to eq('Found Qualification')
+        expect(JSON.parse(response.body)['qualifications'].count).to eq(2)
       end
 
-      it 'if there is no qualifications' do
-        get '/qualifications'
+      it 'returns 404 status if no qualification found' do
+        get :index
 
         expect(response).to have_http_status(404)
+        expect(JSON.parse(response.body)['message']).to eq('No Qualification Found')
+        expect(JSON.parse(response.body)['qualification']).to be_nil
       end
     end
 
     context 'when the user is not admin' do
-      before { sign_in(teacher_user) }
+      let(:non_admin_user) { FactoryBot.create(:user, role: "student") }
+      let(:token) { JWT.encode({ sub: non_admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
-      it 'returns unauthorized status' do
-        get '/qualifications'
+      before do
+        request.headers['token'] = token
+      end
+
+      it 'returns 401 status with an error message' do
+        get :index
+
         expect(response).to have_http_status(401)
         expect(JSON.parse(response.body)['message']).to eq('You are not authorized to perform this action')
+        expect(JSON.parse(response.body)['qualification']).to be_nil
       end
     end
   end
 
-  describe "POST /create" do
-    let(:qualification_attributes) { attributes_for(:qualification) }
+  describe "POST #create" do
+    context "when user is admin" do
+      let(:admin_user) { FactoryBot.create(:user, role: 'admin') }
+      let(:token) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
-    context 'when user is an admin' do
       before do
-        sign_in(admin_user)
+        request.headers['token'] = token
       end
 
-      it 'creating new qualification with valid params' do
-        post '/qualifications', params: {
-          qualification: qualification_attributes
-        }
-        expect(response).to have_http_status(200)
-        expect(Qualification.count).to eq(1)
-      end 
+      context "with valid parameters" do
+        let(:qualification) { FactoryBot.create(:qualification) }
+        it "creates a new qualification" do
+          qualification_params = FactoryBot.attributes_for(:qualification)
 
-      it 'creating new qualification with invalid params' do
-        post '/qualifications', params: {
-          qualification: qualification_attributes.merge(name: '')
-        }
-        expect(response).to have_http_status(422)
-        expect(Qualification.count).to eq(0)
+          expect {
+            post :create, params: { qualification: qualification_params }
+          }.to change(Qualification, :count).by(1)
+
+          expect(response).to have_http_status(200)
+          expect(JSON.parse(response.body)['message']).to eq('Qualification created successfully')
+        end
+      end
+
+      context "with invalid parameters" do
+        it "returns an unprocessable entity status" do
+          invalid_params = { name: "" }
+
+          post :create, params: { qualification: invalid_params }
+
+          expect(response).to have_http_status(422)
+          expect(JSON.parse(response.body)['message']).to eq('Unprosseable Entity')
+        end
       end
     end
 
-    context 'when user is not an admin' do
-      before { sign_in(teacher_user) }
+    context "when user is not admin" do
+      let(:teacher_user) { FactoryBot.create(:user, role: 'teacher') }
+      let(:token) { JWT.encode({ sub: teacher_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
-      it 'returns unauthorized status' do
-        post '/qualifications' , params: { qualification: {} }
+      before do
+        request.headers['token'] = token
+      end
+
+      it "returns unauthorized status" do
+        qualification_params = FactoryBot.attributes_for(:qualification)
+
+        post :create, params: { qualification: qualification_params }
+
         expect(response).to have_http_status(401)
         expect(JSON.parse(response.body)['message']).to eq('You are not autharized to perform this action')
       end

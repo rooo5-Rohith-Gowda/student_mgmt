@@ -15,7 +15,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
             id: resource.id, 
             type: "sms-otp",
             attributes: {
-              pin: 1111
             },
             meta: {
               token: token

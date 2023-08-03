@@ -6,6 +6,14 @@ Rails.application.routes.draw do
   }
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+
+  namespace :admin do
+    resources :interests do
+      collection do
+        post :import_csv
+      end
+    end
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
@@ -17,14 +25,14 @@ Rails.application.routes.draw do
     end
     post 'accounts/otp_verification', to: 'accounts#otp_verification'
   
-    resources :interests, only: [:create, :new, :index]
     resources :qualifications, only: [:create, :new, :index]
     resources :academics, only: [:index, :create, :update, :destroy]
+    resources :interests
     resources :users, only: [:show]
     resources :assessments do
       member do
         get 'show_questions'
-        post '/assessment_questions/:question_id/submit_answer', to: 'assessments#submit_answer', as: 'submit_answer'
+        post 'submit_answer', to: 'assessments#submit_answer', as: 'submit_answer'
       end
     end
     resources :assessment_questions, only: [:index, :create, :update, :show, :destroy]

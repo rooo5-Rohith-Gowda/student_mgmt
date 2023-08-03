@@ -54,6 +54,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 5.0.0'
   gem 'faker'
+  gem 'devise'
 end
 
 group :development do
@@ -72,6 +73,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
+  gem 'database_cleaner'
 end
 
 gem 'devise'
@@ -86,3 +88,7 @@ gem 'active_model_serializers'
 gem 'fast_jsonapi'
 gem 'stripe'
 gem 'country_select'
+gem 'arctic_admin', '~>3.3'
+gem 'uglifier'
+gem 'coffee-rails'
+gem 'csv'

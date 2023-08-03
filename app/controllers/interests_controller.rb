@@ -1,9 +1,11 @@
 class InterestsController < ApplicationController
     # before_action :set_interest, only: [:show, :edit, :update]
-    skip_before_action :verify_authenticity_token
+    # skip_before_action :verify_authenticity_token
+    before_action :check_user
 
     def index
-        if current_user.role == "admin"
+        user = auth_user
+        if user.role == "admin"
             @interests = Interest.all
             if @interests.empty?
                 render json: {
@@ -28,7 +30,8 @@ class InterestsController < ApplicationController
     # end
 
     def create
-        if current_user.role == "admin"
+        user = auth_user
+        if user.role == "admin"
             @interest = Interest.new(interest_params)
             if @interest.save
                 render json: {

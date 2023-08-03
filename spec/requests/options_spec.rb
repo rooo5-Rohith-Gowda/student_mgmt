@@ -1,32 +1,30 @@
 require 'rails_helper'
 
-RSpec.describe "Options", type: :request do
-  include Devise::Test::IntegrationHelpers
-
-  let(:admin_user) { FactoryBot.create(:user, role: "admin") }
-  let(:teacher_user) { FactoryBot.create(:user, role: "teacher") }
-  let(:student) { FactoryBot.create(:user, role: "student") }
+RSpec.describe OptionsController, type: :controller do  
   let(:assessment_question) { FactoryBot.create(:assessment_question)}
 
   describe "GET /index" do
     context 'when user is admin' do
 
+      let(:admin_user) { FactoryBot.create(:user, role: 'admin') }
+      let(:token) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
+
       before do
-        sign_in admin_user
+        request.headers['token'] = token
       end
 
       it 'returns all the Options if present' do
-        option = create(:option)
-        option1 = create(:option)
+        option = FactoryBot.create(:option)
+        option1 = FactoryBot.create(:option)
 
-        get '/options' 
+        get :index 
 
         expect(response).to have_http_status(200)
         expect(JSON.parse(response.body)['message']).to eq("Found Options")
       end
 
       it 'if there is no options present' do
-        get '/options'
+        get :index
 
         expect(response).to have_http_status(404)
         expect(JSON.parse(response.body)['message']).to eq('No Options Found')
@@ -34,12 +32,15 @@ RSpec.describe "Options", type: :request do
     end
 
     context 'when user is not admin' do
+      let(:teacher_user) { FactoryBot.create(:user, role: 'teacher') }
+      let(:token) { JWT.encode({ sub: teacher_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
+
       before do
-        sign_in(student)
+        request.headers['token'] = token
       end
       
       it 'returns unauthorized status' do
-        get '/options' 
+        get :index 
         expect(response).to have_http_status(401)
         expect(JSON.parse(response.body)['message']).to eq('You are not authorized to perform this action')
       end
@@ -50,29 +51,38 @@ RSpec.describe "Options", type: :request do
     let(:option_params) { { option: attributes_for(:option, assessment_question_id: assessment_question.id) } }
 
     context 'when user is admin' do 
+      let(:admin_user) { FactoryBot.create(:user, role: 'admin') }
+      let(:token) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
+
       before do
-        sign_in(admin_user)
+        request.headers['token'] = token
       end
 
       it 'creates a new option' do
-        post '/options', params: option_params
+        post :create, params: option_params
         expect(response).to have_http_status(200)
         expect(JSON.parse(response.body)['message']).to eq('Options created successfully')
       end
 
-      it 'returns unprocessable entity when assessment creation fails' do
+      it 'returns unprocessable entity when option creation fails' do
         option_params = { choice:"" }
-        post '/options' , params: { option: option_params }
+        post :create , params: { option: option_params, assessment_question_id: assessment_question.id}
         expect(response).to have_http_status(422)
         expect(JSON.parse(response.body)['message']).to eq('Unprosseable Entity')
       end
     end
 
     context 'when user not admin' do
-      before { sign_in(student) }
+
+      let(:teacher_user) { FactoryBot.create(:user, role: 'teacher') }
+      let(:token) { JWT.encode({ sub: teacher_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
+
+      before do
+        request.headers['token'] = token
+      end
 
       it 'returns unauthorized status' do
-        post '/options' , params: { option: {} }
+        post :create , params: { option: {} }
         expect(response).to have_http_status(401)
         expect(JSON.parse(response.body)['message']).to eq('You are not authorized to perform this action')
       end
@@ -84,28 +94,40 @@ RSpec.describe "Options", type: :request do
 
     let(:option) { FactoryBot.create(:option) }
     context 'when user is an admin' do
-      before { sign_in(admin_user) }
+      
+      let(:admin_user) { FactoryBot.create(:user, role: 'admin') }
+      let(:token) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
-      it 'updates the specified assessment' do
+      before do
+        request.headers['token'] = token
+      end
+
+      it 'updates the specified option' do
         option_params = { choice: 'option b' }
-        patch '/options/1', params: { id: option.id, option: option_params }
+        patch :update, params: { id: option.id, option: option_params }
         expect(response).to have_http_status(200)
         expect(JSON.parse(response.body)['message']).to eq('Option Updated Successfully')
       end
 
-      it 'returns unprocessable entity when question update fails' do
+      it 'returns unprocessable entity when option update fails' do
         option_params = { choice: '' }
-        patch '/options/1', params: { id: option.id, option: option_params }
+        patch :update, params: { id: option.id, option: option_params }
         expect(response).to have_http_status(422)
         expect(JSON.parse(response.body)['message']).to eq('Unproccessable entity')
       end
     end
 
     context 'when user is not an admin' do
-      before { sign_in(teacher_user) }
+
+      let(:teacher_user) { FactoryBot.create(:user, role: 'teacher') }
+      let(:token) { JWT.encode({ sub: teacher_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
+
+      before do
+        request.headers['token'] = token
+      end
 
       it 'returns unauthorized status' do
-        put '/options/1', params: { id: option.id, option: {} }
+        put :update, params: { id: option.id, option: {} }
         expect(response).to have_http_status(401)
         expect(JSON.parse(response.body)['message']).to eq('You are not authorized to perform this action')
       end

@@ -1,8 +1,10 @@
 class OptionsController < ApplicationController
-    skip_before_action :verify_authenticity_token
+    # skip_before_action :verify_authenticity_token
+    before_action :check_user
 
     def index
-        if current_user.role == "admin"
+        user = auth_user
+        if user.role == "admin"
             @options = Option.all
             if @options.empty?
                 render json: {
@@ -23,7 +25,8 @@ class OptionsController < ApplicationController
     end
 
     def create
-        if current_user.role == "admin"
+        user = auth_user
+        if user.role == "admin"
             @option = Option.new(option_params)
             if @option.save
                 render json: {
@@ -42,7 +45,8 @@ class OptionsController < ApplicationController
     end
 
     def update
-        if current_user.role == "admin"
+        user = auth_user
+        if user.role == "admin"
             @option = Option.find(params[:id])
             if @option.update(option_params)
                 render json: {

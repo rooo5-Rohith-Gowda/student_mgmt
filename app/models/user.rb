@@ -1,4 +1,5 @@
 require 'devise/jwt'
+require 'csv'
 
 class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::JTIMatcher
@@ -23,5 +24,12 @@ class User < ApplicationRecord
 
   def generate_jwt
     JWT.encode(jwt_payload, Rails.application.credentials.secret_key_base )
+  end
+
+  def to_csv
+    CSV.generate(headers: true) do |csv|
+      csv << User.attribute_names
+      csv << attributes.values
+    end
   end
 end

@@ -1,29 +1,32 @@
-class AcademicsController < ApplicationController
+class AcademicsController < ApplicationController    
     before_action :set_academics, only: [:update, :destroy]
-
+    before_action :check_user
+    
     def index
-        @academics = Academic.all
-        if @academics.empty?
-            render json: {
-                message: "No Qualification Found",
-                academics: []
-            }, status: 404
+        user = auth_user
+        if user.role == 'admin'
+            @academics = Academic.all
+            if @academics.empty?
+                render json: {
+                    message: "No Academics Found",
+                    academics: []
+                }, status: 404
+            else
+                render json: {
+                    message: "Found Academics",
+                    academics: @academics
+                }, status: 200
+            end
         else
             render json: {
-                message: "Found Qualification",
-                academics: @academics
-            }, status: 200
+                message: 'your are not authorized to perform this action'
+            }, status: 401
         end
     end
 
     def create
-        token = request.headers['token']&.split&.last
-        payload= JWT.decode(token, nil, false).first
-        p payload
-
-        if payload.present? && payload['exp'] >= Time.now.to_i
-            user = User.find_by(id: payload['sub'])
-            if user.present?
+        user = auth_user
+        if user.present? && user.role != 'admin'
             @academic = Academic.new(academic_params)
             @academic.user_id = user.id
             if @academic.save
@@ -36,12 +39,11 @@ class AcademicsController < ApplicationController
                 message: "Unprocessable Entity"
                 }, status: 422
             end
-        else
-          render json: {
-            message: "Invalid token or user not found"
-          }, status: 404
+        else 
+            render json: {
+                message: "You no need academics to log in"
+            }, status: 401
         end
-      end
     end
 
     # def update
@@ -70,10 +72,6 @@ class AcademicsController < ApplicationController
     # end
 
     private
-
-    rescue_from JWT::DecodeError do
-        render json: { message: 'Invalid token' }, status: :unprocessable_entity
-    end
 
     # def set_academics
     #     @academic = Academic.find(params[:id])

@@ -1,0 +1,11 @@
+question,level,assessment_id,options
+Who invented Java Programming?,level1,1,"Guido van Rossum,James Gosling,Dennis Ritchie,Bjarne Stroustrup"
+Which statement is true about Java?,level1,1,"Java is a sequence-dependent programming language,Java is a code dependent programming language,Java is a platform-dependent programming language,Java is a platform-independent programming language"
+"Which component is used to compile, debug and execute the java programs?",level1,1,"JRE,JIT,JDK,JVM"
+Which of these cannot be used for a variable name in Java?,level1,1,"identifier & keyword,identifier,keyword,none of the mentioned"
+Which one of the following is not a Java feature?,level1,1,"Object-oriented,Use of pointers,Portable,Dynamic and Extensible"
+What is the extension of java code files?,level1,1,"js,txt,class,java"
+Which environment variable is used to set the java path?,level1,1,"MAVEN_Path,JavaPATH,JAVA,JAVA_HOME"
+Which of the following is not an OOPS concept in Java?,level1,1,"Polymorphism,Inheritance,Compilation,Encapsulation"
+ What is Truncation in Java?,level1,1,"Floating-point value assigned to a Floating type,Floating-point value assigned to an integer type,Integer value assigned to floating type,Integer value assigned to floating type"
+What is the extension of compiled java classes?,level1,1,"txt,js,class,java"

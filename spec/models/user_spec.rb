@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'csv'
 
 RSpec.describe User, type: :model do
   describe 'Validation' do 
@@ -102,4 +103,21 @@ RSpec.describe User, type: :model do
       user.generate_jwt
     end
   end
+
+  describe '#to_csv' do
+    let(:user) { FactoryBot.create(:user, last_name: 'John Doe', email: 'john@example.com') }
+
+    it 'returns CSV data with correct headers and values' do
+      csv_data = user.to_csv
+
+      csv_hash = CSV.parse(csv_data, headers: true).map(&:to_h).first
+
+      expect(csv_hash.keys).to contain_exactly(*User.attribute_names.map(&:to_s))
+
+      expect(csv_hash['id'].to_i).to eq(user.id)
+      expect(csv_hash['last_name']).to eq('John Doe')
+      expect(csv_hash['email']).to eq('john@example.com')
+    end
+  end
+
 end

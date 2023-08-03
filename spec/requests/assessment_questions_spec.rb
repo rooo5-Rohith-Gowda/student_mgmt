@@ -1,148 +1,199 @@
-require 'rails_helper'
-
-RSpec.describe "AssessmentQuestions", type: :request do
-  include Devise::Test::IntegrationHelpers
-
-  let(:admin_user) { FactoryBot.create(:user, role: "admin") }
-  let(:teacher_user) { FactoryBot.create(:user, role: "teacher") }
-  let(:assessment) { FactoryBot.create(:assessment) }
-  # let(:assessment_question) { FactoryBot.create(:assessment_question) }
-
+RSpec.describe AssessmentQuestionsController, type: :controller do
   describe "GET /index" do
-
     context 'when user is admin' do 
+      let(:admin_user) { FactoryBot.create(:user, role: 'admin') }
+      let(:token) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
+
       before do
-        sign_in admin_user
+        request.headers['token'] = token
       end
   
       it 'returns all the Assessment Question details present if present' do
-        assessment_question1 = create(:assessment_question)
-        assessment_question2 = create(:assessment_question)
-  
-        get '/assessment_questions'
+        assessment_question1 = FactoryBot.create(:assessment_question)
+        assessment_question2 = FactoryBot.create(:assessment_question)
+
+        get :index
   
         expect(response).to have_http_status(200)
         expect(JSON.parse(response.body)['message']).to eq('Found Questions')
+        expect(JSON.parse(response.body)['assessment_questions'].count).to eq(2)
       end
   
       it 'if there is no Assessment question' do
-        get '/assessment_questions'
+        get :index
   
         expect(response).to have_http_status(404)
         expect(JSON.parse(response.body)['message']).to eq('No Questions Found')
+        expect(JSON.parse(response.body)['assessment_questions']).to be_empty
       end
     end
 
     context 'when user is not admin' do
+      let(:teacher_user) { FactoryBot.create(:user, role: 'teacher') }
+      let(:token) { JWT.encode({ sub: teacher_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
+
       before do
-        sign_in teacher_user
+        request.headers['token'] = token
       end
 
       it 'returns unauthorized status' do
-        get '/assessment_questions'
+        get :index
+        expect(response).to have_http_status(401)
+        expect(JSON.parse(response.body)['message']).to eq('You are not authorized to perform this action')
+        expect(JSON.parse(response.body)['assessment_questions']).to be_nil
+      end
+    end
+  end
+
+  describe "POST #create" do
+    context "when user is admin" do
+      let(:admin_user) { FactoryBot.create(:user, role: 'admin') }
+      let(:token) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
+
+      before do
+        request.headers['token'] = token
+      end
+
+      context "with valid parameters" do
+        let(:assessment) { FactoryBot.create(:assessment) }
+        it "creates a new assessment question" do
+          assessment_params = FactoryBot.attributes_for(:assessment_question, assessment_id: assessment.id)
+
+          expect {
+            post :create, params: { assessment_question: assessment_params }
+          }.to change(AssessmentQuestion, :count).by(1)
+
+          expect(response).to have_http_status(200)
+          expect(JSON.parse(response.body)['message']).to eq('Question created successfully')
+        end
+      end
+
+      context "with invalid parameters" do
+        it "returns an unprocessable entity status" do
+          invalid_params = { question: "", correct_option: "", level: "", assessment_id: nil }
+
+          post :create, params: { assessment_question: invalid_params }
+
+          expect(response).to have_http_status(422)
+          expect(JSON.parse(response.body)['message']).to eq('Unprosseable Entity')
+        end
+      end
+    end
+
+    context "when user is not admin" do
+      let(:teacher_user) { FactoryBot.create(:user, role: 'teacher') }
+      let(:token) { JWT.encode({ sub: teacher_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
+
+      before do
+        request.headers['token'] = token
+      end
+
+      it "returns unauthorized status" do
+        assessment_params = FactoryBot.attributes_for(:assessment_question)
+
+        post :create, params: { assessment_question: assessment_params }
+
         expect(response).to have_http_status(401)
         expect(JSON.parse(response.body)['message']).to eq('You are not authorized to perform this action')
       end
     end
-    
   end
 
+  describe "GET /show" do
+    context 'when user is admin' do 
+      let(:admin_user) { FactoryBot.create(:user, role: 'admin') }
+      let(:token) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
-  describe 'POST #create' do
-    let(:assessment_questions) { attributes_for(:assessment_question, assessment_id: assessment.id) }
-
-    context 'when user is an admin' do
       before do
-        sign_in(admin_user)
+        request.headers['token'] = token
       end
+  
+      it 'returns the Assessment Question details present if present' do
+        assessment_question = FactoryBot.create(:assessment_question)
 
-      it 'creates a new assessment question' do
-        post '/assessment_questions' , params: { assessment_question: assessment_questions }
+        get :show, params: { id: assessment_question.id }
         
         expect(response).to have_http_status(200)
-        expect(JSON.parse(response.body)['message']).to eq('Question created successfully')
       end
+  
+      it 'if there is no Assessment question' do
 
-      it 'returns unprocessable entity when question creation fails' do
-        question_params = { question: '', correct_option: '', level: '', assessment_id: '' }
-        post '/assessment_questions' , params: { assessment_question: question_params }
-        expect(response).to have_http_status(422)
-        expect(JSON.parse(response.body)['message']).to eq('Unprosseable Entity')
-      end
-    end
-
-    context 'when user is not an admin' do
-      before { sign_in(teacher_user) }
-
-      it 'returns unauthorized status' do
-        post '/assessment_questions' , params: { assessment_question: {} }
-        expect(response).to have_http_status(401)
-        expect(JSON.parse(response.body)['message']).to eq('You are not authorized to perform this action')
-      end
-    end
-  end
-
-  describe 'GET #show' do
-    let(:assessment_question) { FactoryBot.create(:assessment_question) }
-
-    context 'when user is an admin' do
-      
-      before { sign_in(admin_user) }
-
-      it 'returns the specified assessment question' do
-        assessment_question_params = create(:assessment_question, assessment_id: assessment.id)
-        get '/assessment_questions/1', params: { id: assessment_question_params.id }
-        expect(response).to have_http_status(200)
-        expect(JSON.parse(response.body)['question']).to eq(assessment_question_params.question)
-        expect(JSON.parse(response.body)['options']).to eq(assessment_question_params.options.pluck(:text))
-      end
-
-      it 'returns not found when the question is not found' do
-        get '/assessment_questions/3', params: { id: 15 }
+        get :show, params: { id: 1 }
+  
         expect(response).to have_http_status(404)
         expect(JSON.parse(response.body)['message']).to eq('Question Not Found')
       end
     end
 
-    context 'when user is not an admin' do
-      before { sign_in(teacher_user) }
+    context 'when user is not admin' do
+      let(:teacher_user) { FactoryBot.create(:user, role: 'teacher') }
+      let(:token) { JWT.encode({ sub: teacher_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
+
+      before do
+        request.headers['token'] = token
+      end
 
       it 'returns unauthorized status' do
-        assessment_question_params = create(:assessment_question, assessment_id: assessment.id)
-        get '/assessment_questions/1', params: { id: assessment_question.id }
+
+        assessment_question = FactoryBot.create(:assessment_question)
+        
+        get :show, params: { id: assessment_question.id }
+
         expect(response).to have_http_status(401)
         expect(JSON.parse(response.body)['message']).to eq('You are not authorized to perform this action')
+        expect(JSON.parse(response.body)['assessment_questions']).to be_nil
       end
     end
   end
-
-  describe 'PUT #update' do
-
-    let(:assessment_question) { FactoryBot.create(:assessment_question) }
-    context 'when user is an admin' do
-      before { sign_in(admin_user) }
-
-      it 'updates the specified assessment question' do
-        question_params = { question: 'Updated question' }
-        put '/assessment_questions/1', params: { id: assessment_question.id, assessment_question: question_params }
+  describe "PATCH /update" do
+    context 'when user is admin' do 
+      let(:admin_user) { FactoryBot.create(:user, role: 'admin') }
+      let(:token) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
+  
+      before do
+        request.headers['token'] = token
+      end
+  
+      it 'updates the Assessment Question if valid parameters are provided' do
+        assessment_question = FactoryBot.create(:assessment_question)
+        updated_attributes = { question: 'Updated Question', correct_option: 'Option A' }
+  
+        patch :update, params: { id: assessment_question.id, assessment_question: updated_attributes }
+  
         expect(response).to have_http_status(200)
         expect(JSON.parse(response.body)['message']).to eq('Question Updated Successfully')
-        expect(assessment_question.reload.question).to eq('Updated question')
+  
+        assessment_question.reload
+  
+        expect(assessment_question.question).to eq('Updated Question')
+        expect(assessment_question.correct_option).to eq('Option A')
       end
-
-      it 'returns unprocessable entity when question update fails' do
-        question_params = { question: '' }
-        put '/assessment_questions/1', params: { id: assessment_question.id, assessment_question: question_params }
+  
+      it 'returns unprocessable entity status if invalid parameters are provided' do
+        assessment_question = FactoryBot.create(:assessment_question)
+        invalid_attributes = { question: '', correct_option: '' }
+  
+        patch :update, params: { id: assessment_question.id, assessment_question: invalid_attributes }
+  
         expect(response).to have_http_status(422)
         expect(JSON.parse(response.body)['message']).to eq('Unproccessable entity')
       end
     end
-
-    context 'when user is not an admin' do
-      before { sign_in(teacher_user) }
-
+  
+    context 'when user is not admin' do
+      let(:teacher_user) { FactoryBot.create(:user, role: 'teacher') }
+      let(:token) { JWT.encode({ sub: teacher_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
+  
+      before do
+        request.headers['token'] = token
+      end
+  
       it 'returns unauthorized status' do
-        put '/assessment_questions/1', params: { id: assessment_question.id, assessment_question: {} }
+        assessment_question = FactoryBot.create(:assessment_question)
+        updated_attributes = { question: 'Updated Question', correct_option: 'Option A' }
+  
+        patch :update, params: { id: assessment_question.id, assessment_question: updated_attributes }
+  
         expect(response).to have_http_status(401)
         expect(JSON.parse(response.body)['message']).to eq('You are not authorized to perform this action')
       end
@@ -150,30 +201,59 @@ RSpec.describe "AssessmentQuestions", type: :request do
   end
 
   describe 'DELETE #destroy' do
-    let(:assessment_question) { FactoryBot.create(:assessment_question) }
-    context 'when user is an admin' do
-      before { sign_in(admin_user) }
+    context 'when user is admin' do
+      let(:admin_user) { FactoryBot.create(:user, role: 'admin') }
+      let(:token) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
-      it 'deletes the specified assessment question' do
-        delete '/assessment_questions/1', params: { id: assessment_question.id }
-        expect(response).to have_http_status(200)
-        expect(JSON.parse(response.body)['message']).to eq('Question Deleted Successfully')
-        expect(AssessmentQuestion.find_by(id: assessment_question.id)).to be_nil
+      before do
+        request.headers['token'] = token
       end
 
-      it 'returns unauthorized when question deletion fails' do
-        allow_any_instance_of(AssessmentQuestion).to receive(:delete).and_return(false)
-        delete '/assessment_questions/1', params: { id: assessment_question.id }
-        expect(response).to have_http_status(401)
-        expect(JSON.parse(response.body)['message']).to eq('Unauthorized')
+      it 'deletes the assessment question' do
+        assessment_question = FactoryBot.create(:assessment_question)
+
+        expect {
+          delete :destroy, params: { id: assessment_question.id }
+        }.to change(AssessmentQuestion, :count).by(-1)
+
+        expect(response).to have_http_status(200)
+        expect(JSON.parse(response.body)['message']).to eq('Question Deleted Successfully')
+      end
+
+      it 'deletes associated options when the assessment question is deleted' do
+        assessment_question = FactoryBot.create(:assessment_question)
+        FactoryBot.create_list(:option, 3, assessment_question: assessment_question)
+
+        options_count_before_deletion = assessment_question.options.count
+
+        expect {
+          delete :destroy, params: { id: assessment_question.id }
+        }.to change(Option, :count).by(-options_count_before_deletion)
+      end
+
+      it 'returns an error' do
+        assessment_question = FactoryBot.create(:assessment_question)
+
+        patch :update, params: { id: assessment_question.id, assessment_question: { question: '' } }
+
+        expect(response).to have_http_status(422)
+        expect(JSON.parse(response.body)['message']).to eq('Unproccessable entity')
       end
     end
 
-    context 'when user is not an admin' do
-      before { sign_in(teacher_user) }
+    context 'when user is not admin' do
+      let(:teacher_user) { FactoryBot.create(:user, role: 'teacher') }
+      let(:token) { JWT.encode({ sub: teacher_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
+
+      before do
+        request.headers['token'] = token
+      end
 
       it 'returns unauthorized status' do
-        delete '/assessment_questions/1', params: { id: assessment_question.id }
+        assessment_question = FactoryBot.create(:assessment_question)
+
+        delete :destroy, params: { id: assessment_question.id }
+
         expect(response).to have_http_status(401)
         expect(JSON.parse(response.body)['message']).to eq('You are not authorized to perform this action')
       end

@@ -37,27 +37,36 @@ class Users::SessionsController < Devise::SessionsController
 
   def destroy
     token = request.headers['token']&.split&.last
-    decoded_token = JWT.decode(token, nil, false)
-    payload = decoded_token.first
-
-    if payload.present? && payload['exp'] >= Time.now.to_i
-      user = User.find_by(payload['sub'])
-      if user.present?
-        sign_out user
-        render json: { message: 'Logged out successfully' }, status: :ok
-      else
-        render json: { message: 'Invalid user' }, status: :unprocessable_entity
+  
+    if token.present?
+      begin
+        decoded_token = JWT.decode(token, nil, false)
+        payload = decoded_token.first
+  
+        if payload.present? && payload['exp'] >= Time.now.to_i
+          user = User.find_by(id: payload['sub'])
+          if user.present?
+            sign_out user
+            render json: { message: 'Logged out successfully' }, status: :ok
+          else
+            render json: { message: 'Invalid user' }, status: :unprocessable_entity
+          end
+        else
+          render json: { message: 'Invalid token' }, status: :unprocessable_entity
+        end
+      rescue JWT::DecodeError
+        render json: { message: 'Invalid token format' }, status: :unprocessable_entity
       end
     else
-      render json: { message: 'Invalid token' }, status: :unprocessable_entity
+      render json: { message: 'Token not provided' }, status: :unprocessable_entity
     end
   end
 
   private
 
-  rescue_from JWT::DecodeError do
-    render json: { message: 'Invalid token' }, status: :unprocessable_entity
-  end
+  # rescue_from JWT::DecodeError do
+  #   render json: { message: 'Invalid token' }, status: :unprocessable_entity
+  # end
 
   def respond_with(resource, _opts = {})
     render json: {

@@ -80,5 +80,26 @@ RSpec.describe Users::RegistrationsController, type: :controller do
       end
     end
 
+    context 'when creating an SMS account' do
+      it 'returns JSON with account exists message and status :ok if user already present' do
+        existing_user = FactoryBot.create(:user, academic: FactoryBot.create(:academic))
+      
+        post :create, params: {
+          data: {
+            type: 'sms_account',
+            user: {
+              email: existing_user.email,
+              full_phone_number: existing_user.full_phone_number
+            }
+          }
+        }
+      
+        expect(response).to have_http_status(:ok)
+        response_body = JSON.parse(response.body)
+        expect(response_body['id']).to eq(existing_user.id)
+        expect(response_body['message']).to eq('Account already exists')
+        expect(response_body['type']).to eq('sms-otp')
+      end
+    end
   end 
 end

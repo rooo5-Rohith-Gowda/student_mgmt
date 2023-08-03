@@ -1,73 +1,99 @@
-require 'rails_helper'
-
-RSpec.describe "Interests", type: :request do
-  include Devise::Test::IntegrationHelpers
-
-  let(:admin_user) { FactoryBot.create(:user, role: "admin") }
-  let(:teacher_user) { FactoryBot.create(:user, role: "teacher") }
-
-  describe "GET #index" do
-
+RSpec.describe InterestsController, type: :controller do
+  describe 'GET #index' do
     context 'when the user is admin' do
-      before do
-        sign_in admin_user
-      end
-      
-      it 'returns all the intrests present if present' do
-        interest1 = create(:interest)
-        interest2 = create(:interest)
+      let(:admin_user) { FactoryBot.create(:user, role: "admin") }
+      let(:token) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
-        get '/interests'
+      before do
+        request.headers['token'] = token
+      end
+
+      it 'returns all the interests present if present' do
+        interest1 = FactoryBot.create(:interest)
+        interest2 = FactoryBot.create(:interest)
+
+        get :index
 
         expect(response).to have_http_status(200)
+        expect(JSON.parse(response.body)['message']).to eq('Found Interests')
+        expect(JSON.parse(response.body)['interests'].count).to eq(2)
       end
 
-      it 'if there is no interest' do
-        get '/interests'
+      it 'returns 404 status if no interests found' do
+        get :index
 
         expect(response).to have_http_status(404)
+        expect(JSON.parse(response.body)['message']).to eq('No Interests Found')
+        expect(JSON.parse(response.body)['interests']).to be_empty
       end
     end
 
     context 'when the user is not admin' do
-      before { sign_in(teacher_user) }
+      let(:non_admin_user) { FactoryBot.create(:user, role: "student") }
+      let(:token) { JWT.encode({ sub: non_admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
-      it 'returns unauthorized status' do
-        get '/interests'
+      before do
+        request.headers['token'] = token
+      end
+
+      it 'returns 401 status with an error message' do
+        get :index
+
         expect(response).to have_http_status(401)
         expect(JSON.parse(response.body)['message']).to eq('You are not authorized to perform this action')
+        expect(JSON.parse(response.body)['interests']).to be_nil
       end
     end
   end
 
-  describe "POST /create" do
-    let(:interest_attributes) { attributes_for(:interest) }
-    context 'when user is an admin' do
-      before do
-        sign_in(admin_user)
-      end
-      it 'creating new interest with valid params' do
-        post '/interests', params: {
-          interest: interest_attributes
-        }
-        expect(response).to have_http_status(200)
-        expect(Interest.count).to eq(1)
-      end 
+  describe "POST #create" do
+    context "when user is admin" do
+      let(:admin_user) { FactoryBot.create(:user, role: 'admin') }
+      let(:token) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
-      it 'creating new interest wit invalid params' do
-        post '/interests', params: {
-          interest: interest_attributes.merge(name: '')
-        }
-        expect(response).to have_http_status(422)
-        expect(Interest.count).to eq(0)
+      before do
+        request.headers['token'] = token
+      end
+
+      context "with valid parameters" do
+        let(:interest) { FactoryBot.create(:interest) }
+        it "creates a new interest question" do
+          interest_params = FactoryBot.attributes_for(:interest)
+
+          expect {
+            post :create, params: { interest: interest_params }
+          }.to change(Interest, :count).by(1)
+
+          expect(response).to have_http_status(200)
+          expect(JSON.parse(response.body)['message']).to eq('Interest created successfully')
+        end
+      end
+
+      context "with invalid parameters" do
+        it "returns an unprocessable entity status" do
+          invalid_params = { name: "" }
+
+          post :create, params: { interest: invalid_params }
+
+          expect(response).to have_http_status(422)
+          expect(JSON.parse(response.body)['message']).to eq('Unprosseable Entity')
+        end
       end
     end
 
-    context 'when user is not an admin' do
-      before { sign_in(teacher_user) }
+    context "when user is not admin" do
+      let(:teacher_user) { FactoryBot.create(:user, role: 'teacher') }
+      let(:token) { JWT.encode({ sub: teacher_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
-      it 'returns unauthorized status' do
-        post '/interests' , params: { interest: {} }
+      before do
+        request.headers['token'] = token
+      end
+
+      it "returns unauthorized status" do
+        interest_params = FactoryBot.attributes_for(:interest)
+
+        post :create, params: { interest: interest_params }
+
         expect(response).to have_http_status(401)
         expect(JSON.parse(response.body)['message']).to eq('Only admin can create the interest')
       end
