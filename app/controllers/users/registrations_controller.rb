@@ -7,25 +7,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
       build_resource(sign_up_params)
       resource.save
       if resource.persisted?
-        if resource.active_for_authentication?
-          # Twilio::SmsService.new(to: resource.full_phone_number, pin: '').send_otp
-          sign_up(resource_name, resource)
-          token = request.env['warden-jwt_auth.token']
-          render json: {
-            id: resource.id, 
-            type: "sms-otp",
-            attributes: {
-            },
-            meta: {
-              token: token
-            },
-            message: 'User created successfully'  }, status: 200
-        else
-          render json: { status: { code: 401, message: "User is not active" } }
-        end
+        Twilio::SmsService.new(to: resource.full_phone_number, pin: '').send_otp
+        sign_up(resource_name, resource)
+        token = request.env['warden-jwt_auth.token']
+        render json: {
+          id: resource.id, 
+          type: "sms-otp",
+          token: token,
+          message: 'User created successfully'  
+        }, status: 200
       else
         existing_user = User.find_by(email: resource.email)
         if  existing_user
+          token = existing_user.generate_jwt
           if existing_user.academic.present?
             render json: {
               id: existing_user&.id, 
@@ -35,8 +29,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
             }, status: 200
           else
             existing_user.full_phone_number = params[:data][:user][:full_phone_number]
-            token = existing_user.generate_jwt
-            # Twilio::SmsService.new(to:existing_user.full_phone_number, pin: '').send_otp
+            Twilio::SmsService.new(to:existing_user.full_phone_number, pin: '').send_otp
             render json: {
               id: existing_user&.id, 
               meta: { token: token },
