@@ -80,7 +80,7 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
         request.headers['token'] = token_teacher
       end
 
-      it "returns unauthorized status" do
+      it "returns unauthorized" do
         assessment_params = FactoryBot.attributes_for(:assessment_question)
 
         post :create, params: { assessment_question: assessment_params }
@@ -119,7 +119,7 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
         request.headers['token'] = token_teacher
       end
 
-      it 'returns unauthorized status' do
+      it 'returns error message' do
 
         assessment_question = FactoryBot.create(:assessment_question)
         
@@ -164,7 +164,7 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
         request.headers['token'] = token_teacher
       end
   
-      it 'returns unauthorized status' do
+      it 'returns 401 status' do
         assessment_question = FactoryBot.create(:assessment_question)
         updated_attributes = { question: 'Updated Question', correct_option: 'Option A' }
   
@@ -215,7 +215,7 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
         request.headers['token'] = token_teacher
       end
 
-      it 'returns unauthorized status' do
+      it 'gives unauthorized status' do
         assessment_question = FactoryBot.create(:assessment_question)
 
         delete :destroy, params: { id: assessment_question.id }
