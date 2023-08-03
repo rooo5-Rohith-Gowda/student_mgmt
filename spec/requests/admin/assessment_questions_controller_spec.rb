@@ -8,8 +8,9 @@ RSpec.describe Admin::AssessmentQuestionsController, type: :controller do
   end
 
   describe 'POST #import_csv' do
+    type = 'text/csv'
     it 'imports CSV file and creates assessment questions' do
-      csv_file = fixture_file_upload('Untitled spreadsheet - Sheet1 (24).csv', 'text/csv')
+      csv_file = fixture_file_upload('Untitled spreadsheet - Sheet1 (24).csv', type)
 
       post :import_csv, params: { assessment_question: { csv_file: csv_file } }
 
@@ -19,7 +20,7 @@ RSpec.describe Admin::AssessmentQuestionsController, type: :controller do
 
     it 'skips rows with blank question_text or options_text' do
 
-        csv_file = fixture_file_upload('Untitled spreadsheet - Sheet1 (23) copy.csv', 'text/csv')
+        csv_file = fixture_file_upload('Untitled spreadsheet - Sheet1 (23) copy.csv', type)
   
         post :import_csv, params: { assessment_question: { csv_file: csv_file } }
   
@@ -28,7 +29,7 @@ RSpec.describe Admin::AssessmentQuestionsController, type: :controller do
 
     it 'skips rows with invalid options_text' do
 
-        csv_file = fixture_file_upload('Untitled spreadsheet - Sheet1 (23).csv', 'text/csv')
+        csv_file = fixture_file_upload('Untitled spreadsheet - Sheet1 (23).csv', type)
   
         post :import_csv, params: { assessment_question: { csv_file: csv_file } }
   
