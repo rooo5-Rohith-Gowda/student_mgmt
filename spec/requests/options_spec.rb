@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe OptionsController, type: :controller do  
+  MSG = 'You are not authorized to perform this action'
   let(:assessment_question) { FactoryBot.create(:assessment_question)}
 
   describe "GET /index" do
@@ -42,7 +43,7 @@ RSpec.describe OptionsController, type: :controller do
       it 'returns unauthorized status' do
         get :index 
         expect(response).to have_http_status(401)
-        expect(JSON.parse(response.body)['message']).to eq('You are not authorized to perform this action')
+        expect(JSON.parse(response.body)['message']).to eq(MSG)
       end
     end
   end
@@ -81,10 +82,10 @@ RSpec.describe OptionsController, type: :controller do
         request.headers['token'] = token
       end
 
-      it 'returns unauthorized status' do
+      it 'returns 401 status' do
         post :create , params: { option: {} }
         expect(response).to have_http_status(401)
-        expect(JSON.parse(response.body)['message']).to eq('You are not authorized to perform this action')
+        expect(JSON.parse(response.body)['message']).to eq(MSG)
       end
     end
   end 
@@ -126,10 +127,10 @@ RSpec.describe OptionsController, type: :controller do
         request.headers['token'] = token
       end
 
-      it 'returns unauthorized status' do
+      it 'gives unauthorized status' do
         put :update, params: { id: option.id, option: {} }
         expect(response).to have_http_status(401)
-        expect(JSON.parse(response.body)['message']).to eq('You are not authorized to perform this action')
+        expect(JSON.parse(response.body)['message']).to eq(MSG)
       end
     end
   end
