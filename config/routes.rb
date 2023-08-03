@@ -8,12 +8,15 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
 
   namespace :admin do
+    resources :qualifications, only: [:index, :new, :create]
     resources :interests do
       collection do
         post :import_csv
       end
     end
   end
+
+  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

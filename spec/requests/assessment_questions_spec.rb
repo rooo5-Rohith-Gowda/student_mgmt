@@ -137,7 +137,9 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
     context 'admin can perform this action' do 
       it 'updates the Assessment Question if valid parameters are provided' do
         assessment_question = FactoryBot.create(:assessment_question)
-        updated_attributes = { question: 'Updated Question', correct_option: 'Option A' }
+        q = 'Updated Question'
+        o = 'Option A'
+        updated_attributes = { question: q, correct_option: o}
   
         patch :update, params: { id: assessment_question.id, assessment_question: updated_attributes }
   
@@ -146,8 +148,8 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
   
         assessment_question.reload
   
-        expect(assessment_question.question).to eq('Updated Question')
-        expect(assessment_question.correct_option).to eq('Option A')
+        expect(assessment_question.question).to eq(q)
+        expect(assessment_question.correct_option).to eq(o)
       end
   
       it 'returns unprocessable entity status if invalid parameters are provided' do
@@ -168,7 +170,7 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
   
       it 'returns 401 status' do
         assessment_question = FactoryBot.create(:assessment_question)
-        updated_attributes = { question: 'Updated Question', correct_option: 'Option A' }
+        updated_attributes = { question: 'Updated', correct_option: 'Option A' }
   
         patch :update, params: { id: assessment_question.id, assessment_question: updated_attributes }
   

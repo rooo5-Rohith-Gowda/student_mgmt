@@ -9,6 +9,8 @@ RSpec.describe AssessmentsController, type: :controller do
   let(:teacher_user) { FactoryBot.create(:user, role: 'teacher') }
   let(:token_teacher) { JWT.encode({ sub: teacher_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
+  MSG = MSG
+
   include ActionMailer::TestHelper
   describe "GET /index" do
     context 'when user is admin' do
@@ -43,7 +45,7 @@ RSpec.describe AssessmentsController, type: :controller do
       it 'returns unauthorized status' do
         get :index 
         expect(response).to have_http_status(401)
-        expect(JSON.parse(response.body)['message']).to eq('You are not authorized to perform this action')
+        expect(JSON.parse(response.body)['message']).to eq(MSG)
       end
     end
   end
@@ -76,10 +78,10 @@ RSpec.describe AssessmentsController, type: :controller do
         request.headers['token'] = token_admin
       end
 
-      it 'returns unauthorized status' do
+      it 'returns 401 status' do
         post :create , params: { assessment: {} }
         expect(response).to have_http_status(401)
-        expect(JSON.parse(response.body)['message']).to eq('You are not authorized to perform this action')
+        expect(JSON.parse(response.body)['message']).to eq(MSG)
       end
     end
   end 
@@ -115,10 +117,10 @@ RSpec.describe AssessmentsController, type: :controller do
         request.headers['token'] = token_admin
       end
 
-      it 'returns unauthorized status' do
+      it 'gives unauthorized status' do
         put :update, params: { id: assessment.id, assessment: {} }
         expect(response).to have_http_status(401)
-        expect(JSON.parse(response.body)['message']).to eq('You are not authorized to perform this action')
+        expect(JSON.parse(response.body)['message']).to eq(MSG)
       end
     end
   end
@@ -160,7 +162,7 @@ RSpec.describe AssessmentsController, type: :controller do
   
         get :show_questions, params: { id: assessment.id }
         expect(response).to have_http_status(401)
-        expect(JSON.parse(response.body)['message']).to eq('You are not authorized to perform this action')
+        expect(JSON.parse(response.body)['message']).to eq(MSG)
       end
     end
   end
@@ -281,13 +283,13 @@ RSpec.describe AssessmentsController, type: :controller do
         request.headers['token'] = token_admin
       end
 
-      it 'returns "You are not authorized" when user is not a student' do
+      it 'returns "You are not authorized" when user is other than a student' do
         assessment = FactoryBot.create(:assessment)
         question1 = FactoryBot.create(:assessment_question, assessment: assessment)
         submitted_answers = { '1' => 'submitted_answer1', '999' => 'submitted_answer2' }
         post :submit_answer, params: { id: assessment.id, answers: submitted_answers }
         expect(response).to have_http_status(401)
-        expect(JSON.parse(response.body)['message']).to eq('You are not authorized to perform this action')
+        expect(JSON.parse(response.body)['message']).to eq(MSG)
       end
     end
 
@@ -298,7 +300,7 @@ RSpec.describe AssessmentsController, type: :controller do
         request.headers['token'] = token
       end
 
-      it 'returns "You are not authorized" when user is not a student' do
+      it 'returns "You are not authorized" ' do
         assessment = FactoryBot.create(:assessment)
         question1 = FactoryBot.create(:assessment_question, assessment: assessment)
         submitted_answers = { '1' => 'submitted_answer1', '999' => 'submitted_answer2' }
