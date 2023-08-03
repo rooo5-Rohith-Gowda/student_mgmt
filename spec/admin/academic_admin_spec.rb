@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Academic, type: :feature do
   let(:admin_user) { FactoryBot.create(:admin_user) }
-  let!(:interest) { FactoryBot.create(:interest, name: "Computer  Science") }
+  let!(:interest) { FactoryBot.create(:interest, name: "Computer Science") }
   let!(:qualification) { FactoryBot.create(:qualification, name: "Bachelor's Degree") }
   let!(:user) { FactoryBot.create(:user) }
 
@@ -10,8 +10,9 @@ RSpec.describe Academic, type: :feature do
     login_as(admin_user, scope: :admin_user)
   end
 
-  CN = "Computer  Science"
-
+  CN = "Computer Science"
+  BD = "Bachelor's Degree"
+  UNI = "XYZ University"
   describe "Academic Index Page" do
     it "displays academic details correctly" do
       academic = FactoryBot.create(:academic, college_name: "ABC College", interest: interest, qualification: qualification, user: user)
@@ -20,7 +21,7 @@ RSpec.describe Academic, type: :feature do
 
       expect(page).to have_content("ABC College")
       expect(page).to have_content(CN)
-      expect(page).to have_content("Bachelor's Degree")
+      expect(page).to have_content(BD)
       expect(page).to have_content(user.email)
     end
   end
@@ -29,16 +30,16 @@ RSpec.describe Academic, type: :feature do
     it "creates a new academic record" do
       visit new_admin_academic_path
 
-      fill_in "College name", with: "XYZ University"
+      fill_in "College name", with: UNI
       select CN, from: "Interest"
       select("Computer Science and Engineering", from: "academic_qualification_id")
 
       fill_in "Language", with: "Become a Software Engineer"
-      fill_in "Other language", with: "Become a Software Engineer"
+      fill_in "Other language", with: "Become Engineer"
       check "Currently working"  
       check "Availability"
-      fill_in "Specialization", with: "Become a Software Engineer"
-      fill_in "Experiance", with: "Become a Software Engineer"
+      fill_in "Specialization", with: "Become a Softwar"
+      fill_in "Experiance", with: "Becomer"
       user = User.find_by(first_name: "Akashy")
       find("option", text: user.first_name).select_option if user
 
@@ -66,13 +67,13 @@ RSpec.describe Academic, type: :feature do
 
   describe "Academic Show Page" do
     it "displays the details of an academic record" do
-      academic = FactoryBot.create(:academic, college_name: "XYZ University", interest: interest, qualification: qualification, user: user)
+      academic = FactoryBot.create(:academic, college_name: UNI, interest: interest, qualification: qualification, user: user)
 
       visit admin_academic_path(academic)
 
-      expect(page).to have_content("XYZ University")
+      expect(page).to have_content(UNI)
       expect(page).to have_content(CN)
-      expect(page).to have_content("Bachelor's Degree")
+      expect(page).to have_content(BD)
       expect(page).to have_content(user.email)
     end
   end

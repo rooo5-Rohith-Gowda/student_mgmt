@@ -1,6 +1,6 @@
 RSpec.describe AssessmentQuestionsController, type: :controller do
   describe "GET /index" do
-    context 'when user is admin' do 
+    context 'admin user' do 
       let(:admin_user) { FactoryBot.create(:user, role: 'admin') }
       let(:token) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
@@ -80,7 +80,7 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
       end
     end
 
-    context "when user is not admin" do
+    context "if user is not admin" do
       let(:teacher_user) { FactoryBot.create(:user, role: 'teacher') }
       let(:token) { JWT.encode({ sub: teacher_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
@@ -100,7 +100,7 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
   end
 
   describe "GET /show" do
-    context 'when user is admin' do 
+    context 'if user is admin' do 
       let(:admin_user) { FactoryBot.create(:user, role: 'admin') }
       let(:token) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
@@ -125,7 +125,7 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
       end
     end
 
-    context 'when user is not admin' do
+    context 'non admin user' do
       let(:teacher_user) { FactoryBot.create(:user, role: 'teacher') }
       let(:token) { JWT.encode({ sub: teacher_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
@@ -146,7 +146,7 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
     end
   end
   describe "PATCH /update" do
-    context 'when user is admin' do 
+    context 'admin can perform this action' do 
       let(:admin_user) { FactoryBot.create(:user, role: 'admin') }
       let(:token) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
   
@@ -180,7 +180,7 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
       end
     end
   
-    context 'when user is not admin' do
+    context 'wnot admin' do
       let(:teacher_user) { FactoryBot.create(:user, role: 'teacher') }
       let(:token) { JWT.encode({ sub: teacher_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
   
@@ -201,7 +201,7 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    context 'when user is admin' do
+    context 'user admin' do
       let(:admin_user) { FactoryBot.create(:user, role: 'admin') }
       let(:token) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
@@ -241,7 +241,7 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
       end
     end
 
-    context 'when user is not admin' do
+    context 'if user is role is not admin' do
       let(:teacher_user) { FactoryBot.create(:user, role: 'teacher') }
       let(:token) { JWT.encode({ sub: teacher_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 

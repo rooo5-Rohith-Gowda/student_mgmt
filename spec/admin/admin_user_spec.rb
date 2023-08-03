@@ -21,7 +21,7 @@ RSpec.describe AdminUser, type: :feature do
 
   describe 'AdminUser New Page' do
     before do
-      admin_user = FactoryBot.create(:admin_user, email: 'admin@example.com')
+      admin_user = FactoryBot.create(:admin_user, email: 'admin1@example.com')
 
       login_as(admin_user, scope: :admin_user)
 

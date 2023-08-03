@@ -8,6 +8,8 @@ RSpec.describe Admin::AssessmentQuestionsController , type: :feature do
     login_as(admin_user, scope: :admin_user)
   end
 
+  AM = 'Sample Assessment'
+
   describe 'Index Page' do
     let!(:assessment_question1) { create(:assessment_question, question: 'Question 1', assessment: assessment) }
     let!(:assessment_question2) { create(:assessment_question, question: 'Question 2', assessment: assessment) }
@@ -17,7 +19,7 @@ RSpec.describe Admin::AssessmentQuestionsController , type: :feature do
 
       expect(page).to have_content('Question 1')
       expect(page).to have_content('Question 2')
-      expect(page).to have_content('Sample Assessment')
+      expect(page).to have_content(AM)
       expect(page).to have_content(assessment_question1.correct_option_choice)
       expect(page).to have_content(assessment_question2.correct_option_choice)
       expect(page).to have_link('Edit')
@@ -30,7 +32,7 @@ RSpec.describe Admin::AssessmentQuestionsController , type: :feature do
       visit new_admin_assessment_question_path
 
       fill_in 'Question', with: 'What is the capital of France?'
-      select 'Sample Assessment', from: 'Assessment'
+      select AM, from: 'Assessment'
       fill_in 'Level', with: 'level1'
       click_button 'Create Assessment question'
 

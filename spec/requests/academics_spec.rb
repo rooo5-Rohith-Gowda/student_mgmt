@@ -104,7 +104,7 @@ RSpec.describe AcademicsController, type: :controller do
         request.headers['token'] = token
       end
 
-      it 'returns a 401 status code with an error message' do
+      it 'returns 401 status code with an error message' do
         post :create
 
         expect(response).to have_http_status(401)
@@ -114,7 +114,7 @@ RSpec.describe AcademicsController, type: :controller do
     end
 
     context 'when no user is authenticated' do
-      it 'returns a 401 status code with an error message' do
+      it 'returns a 401 status code' do
         post :create
 
         expect(response).to have_http_status(401)
