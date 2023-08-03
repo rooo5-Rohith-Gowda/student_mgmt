@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe AssessmentQuestionsController, type: :controller do
 
   let(:admin_user) { FactoryBot.create(:user, role: 'admin') }
@@ -5,26 +7,26 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
   let(:token_admin) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
   let(:token_teacher) { JWT.encode({ sub: teacher_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
+  before do
+    request.headers['token'] = token_admin
+  end
+
   describe "GET /index" do
     context 'admin user' do 
-      before do
-        request.headers['token'] = token_admin
-      end
-  
       it 'returns all the Assessment Question details present if present' do
         assessment_question1 = FactoryBot.create(:assessment_question)
         assessment_question2 = FactoryBot.create(:assessment_question)
 
         get :index
-  
+
         expect(response).to have_http_status(200)
         expect(JSON.parse(response.body)['message']).to eq('Found Questions')
         expect(JSON.parse(response.body)['assessment_questions'].count).to eq(2)
       end
-  
+
       it 'if there is no Assessment question' do
         get :index
-  
+
         expect(response).to have_http_status(404)
         expect(JSON.parse(response.body)['message']).to eq('No Questions Found')
         expect(JSON.parse(response.body)['assessment_questions']).to be_empty
@@ -32,7 +34,6 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
     end
 
     context 'when user is not admin' do
-
       before do
         request.headers['token'] = token_teacher
       end
@@ -48,11 +49,6 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
 
   describe "POST #create" do
     context "when user is admin" do
-
-      before do
-        request.headers['token'] = token_admin
-      end
-
       context "with valid parameters" do
         let(:assessment) { FactoryBot.create(:assessment) }
         it "creates a new assessment question" do
@@ -80,7 +76,6 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
     end
 
     context "if user is not admin" do
-
       before do
         request.headers['token'] = token_teacher
       end
@@ -138,10 +133,6 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
   end
   describe "PATCH /update" do
     context 'admin can perform this action' do 
-      before do
-        request.headers['token'] = token_admin
-      end
-  
       it 'updates the Assessment Question if valid parameters are provided' do
         assessment_question = FactoryBot.create(:assessment_question)
         updated_attributes = { question: 'Updated Question', correct_option: 'Option A' }
@@ -169,7 +160,6 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
     end
   
     context 'wnot admin' do
-  
       before do
         request.headers['token'] = token_teacher
       end
@@ -188,11 +178,6 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
 
   describe 'DELETE #destroy' do
     context 'user admin' do
-
-      before do
-        request.headers['token'] = token_admin
-      end
-
       it 'deletes the assessment question' do
         assessment_question = FactoryBot.create(:assessment_question)
 
@@ -226,7 +211,6 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
     end
 
     context 'if user is role is not admin' do
-
       before do
         request.headers['token'] = token_teacher
       end

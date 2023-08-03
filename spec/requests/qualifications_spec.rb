@@ -7,16 +7,15 @@ RSpec.describe QualificationsController, type: :controller do
   let(:student_user) { FactoryBot.create(:user, role: "student") }
   let(:token_student) { JWT.encode({ sub: student_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
+  before do
+    request.headers['token'] = token
+  end
+
   describe 'GET #index' do
     context 'when the user is admin' do
-
-      before do
-        request.headers['token'] = token
-      end
-
       it 'returns all the qualification present if present' do
         qualification1 = FactoryBot.create(:qualification)
-        qualification = FactoryBot.create(:qualification)
+        qualification2 = FactoryBot.create(:qualification)
 
         get :index
 
@@ -35,7 +34,6 @@ RSpec.describe QualificationsController, type: :controller do
     end
 
     context 'when the user is not admin' do
-
       before do
         request.headers['token'] = token_student
       end
@@ -52,13 +50,9 @@ RSpec.describe QualificationsController, type: :controller do
 
   describe "POST #create" do
     context "when user is admin" do
-
-      before do
-        request.headers['token'] = token
-      end
-
       context "with valid parameters" do
         let(:qualification) { FactoryBot.create(:qualification) }
+
         it "creates a new qualification" do
           qualification_params = FactoryBot.attributes_for(:qualification)
 
@@ -84,7 +78,6 @@ RSpec.describe QualificationsController, type: :controller do
     end
 
     context "when user is not admin" do
-
       before do
         request.headers['token'] = token_student
       end
