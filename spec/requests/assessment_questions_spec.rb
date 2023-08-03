@@ -7,6 +7,8 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
   let(:token_admin) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
   let(:token_teacher) { JWT.encode({ sub: teacher_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
+  MSG = 'You are not authorized to perform this action'
+
   before do
     request.headers['token'] = token_admin
   end
@@ -41,7 +43,7 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
       it 'returns unauthorized status' do
         get :index
         expect(response).to have_http_status(401)
-        expect(JSON.parse(response.body)['message']).to eq('You are not authorized to perform this action')
+        expect(JSON.parse(response.body)['message']).to eq(MSG)
         expect(JSON.parse(response.body)['assessment_questions']).to be_nil
       end
     end
@@ -86,7 +88,7 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
         post :create, params: { assessment_question: assessment_params }
 
         expect(response).to have_http_status(401)
-        expect(JSON.parse(response.body)['message']).to eq('You are not authorized to perform this action')
+        expect(JSON.parse(response.body)['message']).to eq(MSG)
       end
     end
   end
@@ -126,7 +128,7 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
         get :show, params: { id: assessment_question.id }
 
         expect(response).to have_http_status(401)
-        expect(JSON.parse(response.body)['message']).to eq('You are not authorized to perform this action')
+        expect(JSON.parse(response.body)['message']).to eq(MSG)
         expect(JSON.parse(response.body)['assessment_questions']).to be_nil
       end
     end
@@ -171,7 +173,7 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
         patch :update, params: { id: assessment_question.id, assessment_question: updated_attributes }
   
         expect(response).to have_http_status(401)
-        expect(JSON.parse(response.body)['message']).to eq('You are not authorized to perform this action')
+        expect(JSON.parse(response.body)['message']).to eq(MSG)
       end
     end
   end
@@ -221,7 +223,7 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
         delete :destroy, params: { id: assessment_question.id }
 
         expect(response).to have_http_status(401)
-        expect(JSON.parse(response.body)['message']).to eq('You are not authorized to perform this action')
+        expect(JSON.parse(response.body)['message']).to eq(MSG)
       end
     end
   end
