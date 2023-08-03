@@ -1,9 +1,12 @@
 RSpec.describe InterestsController, type: :controller do
+
+  let(:admin_user) { FactoryBot.create(:user, role: "admin") }
+  let(:token) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
+  let(:student_user) { FactoryBot.create(:user, role: "student") }
+  let(:token_student) { JWT.encode({ sub: student_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
+
   describe 'GET #index' do
     context 'when the user is admin' do
-      let(:admin_user) { FactoryBot.create(:user, role: "admin") }
-      let(:token) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
-
       before do
         request.headers['token'] = token
       end
@@ -29,11 +32,9 @@ RSpec.describe InterestsController, type: :controller do
     end
 
     context 'when the user is not admin' do
-      let(:non_admin_user) { FactoryBot.create(:user, role: "student") }
-      let(:token) { JWT.encode({ sub: non_admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
       before do
-        request.headers['token'] = token
+        request.headers['token'] = token_student
       end
 
       it 'returns 401 status with an error message' do
@@ -48,8 +49,6 @@ RSpec.describe InterestsController, type: :controller do
 
   describe "POST #create" do
     context "when user is admin" do
-      let(:admin_user) { FactoryBot.create(:user, role: 'admin') }
-      let(:token) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
       before do
         request.headers['token'] = token
@@ -82,11 +81,9 @@ RSpec.describe InterestsController, type: :controller do
     end
 
     context "when user is not admin" do
-      let(:teacher_user) { FactoryBot.create(:user, role: 'teacher') }
-      let(:token) { JWT.encode({ sub: teacher_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
       before do
-        request.headers['token'] = token
+        request.headers['token'] = token_student
       end
 
       it "returns unauthorized status" do

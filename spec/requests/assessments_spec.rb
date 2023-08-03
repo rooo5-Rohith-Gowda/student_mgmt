@@ -7,7 +7,7 @@ RSpec.describe AssessmentsController, type: :controller do
   let(:token_admin) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
   let(:token_student) { JWT.encode({ sub: student_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
   let(:teacher_user) { FactoryBot.create(:user, role: 'teacher') }
-      let(:token_teacher) { JWT.encode({ sub: teacher_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
+  let(:token_teacher) { JWT.encode({ sub: teacher_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
   include ActionMailer::TestHelper
   describe "GET /index" do
