@@ -1,6 +1,7 @@
 class AssessmentsController < ApplicationController
     # skip_before_action :verify_authenticity_token
     before_action :check_user
+    UNAUTHORIZED_MESSAGE = "You are not authorized to perform this action"
 
     def index
         user = auth_user
@@ -21,7 +22,7 @@ class AssessmentsController < ApplicationController
             end
         else
             render json: {
-                message: "You are not authorized to perform this action"
+                message: UNAUTHORIZED_MESSAGE
             },status: 401
         end
     end
@@ -42,7 +43,7 @@ class AssessmentsController < ApplicationController
             end
         else
             render json: {
-                message: "You are not authorized to perform this action"
+                message: UNAUTHORIZED_MESSAGE
             }, status: 401
         end
     end
@@ -63,7 +64,7 @@ class AssessmentsController < ApplicationController
             end
         else
             render json: {
-                message: "You are not authorized to perform this action"
+                message: UNAUTHORIZED_MESSAGE
             }, status: 401
         end
     end
@@ -97,7 +98,7 @@ class AssessmentsController < ApplicationController
     #         end
     #     else
     #         render json: {
-    #             message: "You are not authorized to perform this action"
+    #             message: UNAUTHORIZED_MESSAGE
     #         }, status: 401
     #     end
     # end
@@ -126,7 +127,7 @@ class AssessmentsController < ApplicationController
             end
         else
           render json: {
-              message: "You are not authorized to perform this action"
+              message: UNAUTHORIZED_MESSAGE
           }, status: 401
         end
     end
@@ -196,7 +197,7 @@ class AssessmentsController < ApplicationController
           }, status: :ok
         else
           render json: {
-            message: "You are not authorized to perform this action"
+            message: UNAUTHORIZED_MESSAGE
           }, status: 401
         end
     end
