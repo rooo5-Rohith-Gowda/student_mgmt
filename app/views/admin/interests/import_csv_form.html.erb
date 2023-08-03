@@ -1,5 +1,6 @@
 <%= form_for @interest, url: import_csv_admin_interests_path, method: :post, multipart: true do |f| %>
  <fieldset class="inputs">
+ <legend>Student Mgmt</legend>
   <ol>
    <li class="string input optional">
     <%= f.label :csv_file, 'CSV File' %>
