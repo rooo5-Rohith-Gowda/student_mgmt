@@ -4,30 +4,34 @@ RSpec.describe InterestsController, type: :controller do
   let(:student_user) { FactoryBot.create(:user, role: "student") }
   let(:token_student) { JWT.encode({ sub: student_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
-  before do
-    request.headers['token'] = token
+  shared_examples_for 'authorized user' do
+    before do
+      request.headers['token'] = token
+    end
+
+    it 'returns all the interests present if present' do
+      interest1 = FactoryBot.create(:interest)
+      interest2 = FactoryBot.create(:interest)
+
+      get :index
+
+      expect(response).to have_http_status(200)
+      expect(JSON.parse(response.body)['message']).to eq('Found Interests')
+      expect(JSON.parse(response.body)['interests'].count).to eq(2)
+    end
+
+    it 'returns 404 status if no interests found' do
+      get :index
+
+      expect(response).to have_http_status(404)
+      expect(JSON.parse(response.body)['message']).to eq('No Interests Found')
+      expect(JSON.parse(response.body)['interests']).to be_empty
+    end
   end
 
   describe 'GET #index' do
     context 'when the user is admin' do
-      it 'returns all the interests present if present' do
-        interest1 = FactoryBot.create(:interest)
-        interest2 = FactoryBot.create(:interest)
-
-        get :index
-
-        expect(response).to have_http_status(200)
-        expect(JSON.parse(response.body)['message']).to eq('Found Interests')
-        expect(JSON.parse(response.body)['interests'].count).to eq(2)
-      end
-
-      it 'returns 404 status if no interests found' do
-        get :index
-
-        expect(response).to have_http_status(404)
-        expect(JSON.parse(response.body)['message']).to eq('No Interests Found')
-        expect(JSON.parse(response.body)['interests']).to be_empty
-      end
+      it_behaves_like 'authorized user'
     end
 
     context 'when the user is not admin' do
@@ -47,15 +51,14 @@ RSpec.describe InterestsController, type: :controller do
 
   describe "POST #create" do
     context "when user is admin" do
+      before do
+        request.headers['token'] = token
+      end
+
       context "with valid parameters" do
-        let(:interest) { FactoryBot.create(:interest) }
-        before do
-          request.headers['token'] = token
-        end
+        let(:interest_params) { FactoryBot.attributes_for(:interest) }
 
         it "creates a new interest question" do
-          interest_params = FactoryBot.attributes_for(:interest)
-
           expect {
             post :create, params: { interest: interest_params }
           }.to change(Interest, :count).by(1)
@@ -70,7 +73,7 @@ RSpec.describe InterestsController, type: :controller do
           post :create, params: { interest: invalid_params }
 
           expect(response).to have_http_status(422)
-          expect(JSON.parse(response.body)['message']).to eq('Unprosseable Entity')
+          expect(JSON.parse(response.body)['message']).to eq('Unprocessable Entity')
         end
       end
     end

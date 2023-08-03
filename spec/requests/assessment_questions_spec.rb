@@ -159,7 +159,7 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
       end
     end
   
-    context 'wnot admin' do
+    context 'not admin' do
       before do
         request.headers['token'] = token_teacher
       end
