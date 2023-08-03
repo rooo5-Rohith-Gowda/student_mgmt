@@ -1,11 +1,14 @@
 RSpec.describe AssessmentQuestionsController, type: :controller do
+
+  let(:admin_user) { FactoryBot.create(:user, role: 'admin') }
+  let(:teacher_user) { FactoryBot.create(:user, role: 'teacher') }
+  let(:token_admin) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
+  let(:token_teacher) { JWT.encode({ sub: teacher_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
+
   describe "GET /index" do
     context 'admin user' do 
-      let(:admin_user) { FactoryBot.create(:user, role: 'admin') }
-      let(:token) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
-
       before do
-        request.headers['token'] = token
+        request.headers['token'] = token_admin
       end
   
       it 'returns all the Assessment Question details present if present' do
@@ -29,11 +32,9 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
     end
 
     context 'when user is not admin' do
-      let(:teacher_user) { FactoryBot.create(:user, role: 'teacher') }
-      let(:token) { JWT.encode({ sub: teacher_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
       before do
-        request.headers['token'] = token
+        request.headers['token'] = token_teacher
       end
 
       it 'returns unauthorized status' do
@@ -47,11 +48,9 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
 
   describe "POST #create" do
     context "when user is admin" do
-      let(:admin_user) { FactoryBot.create(:user, role: 'admin') }
-      let(:token) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
       before do
-        request.headers['token'] = token
+        request.headers['token'] = token_admin
       end
 
       context "with valid parameters" do
@@ -81,11 +80,9 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
     end
 
     context "if user is not admin" do
-      let(:teacher_user) { FactoryBot.create(:user, role: 'teacher') }
-      let(:token) { JWT.encode({ sub: teacher_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
       before do
-        request.headers['token'] = token
+        request.headers['token'] = token_teacher
       end
 
       it "returns unauthorized status" do
@@ -100,12 +97,9 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
   end
 
   describe "GET /show" do
-    context 'if user is admin' do 
-      let(:admin_user) { FactoryBot.create(:user, role: 'admin') }
-      let(:token) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
-
+    context 'if user is admin' do
       before do
-        request.headers['token'] = token
+        request.headers['token'] = token_admin
       end
   
       it 'returns the Assessment Question details present if present' do
@@ -126,11 +120,8 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
     end
 
     context 'non admin user' do
-      let(:teacher_user) { FactoryBot.create(:user, role: 'teacher') }
-      let(:token) { JWT.encode({ sub: teacher_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
-
       before do
-        request.headers['token'] = token
+        request.headers['token'] = token_teacher
       end
 
       it 'returns unauthorized status' do
@@ -147,11 +138,8 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
   end
   describe "PATCH /update" do
     context 'admin can perform this action' do 
-      let(:admin_user) { FactoryBot.create(:user, role: 'admin') }
-      let(:token) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
-  
       before do
-        request.headers['token'] = token
+        request.headers['token'] = token_admin
       end
   
       it 'updates the Assessment Question if valid parameters are provided' do
@@ -181,11 +169,9 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
     end
   
     context 'wnot admin' do
-      let(:teacher_user) { FactoryBot.create(:user, role: 'teacher') }
-      let(:token) { JWT.encode({ sub: teacher_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
   
       before do
-        request.headers['token'] = token
+        request.headers['token'] = token_teacher
       end
   
       it 'returns unauthorized status' do
@@ -202,11 +188,9 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
 
   describe 'DELETE #destroy' do
     context 'user admin' do
-      let(:admin_user) { FactoryBot.create(:user, role: 'admin') }
-      let(:token) { JWT.encode({ sub: admin_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
       before do
-        request.headers['token'] = token
+        request.headers['token'] = token_admin
       end
 
       it 'deletes the assessment question' do
@@ -242,11 +226,9 @@ RSpec.describe AssessmentQuestionsController, type: :controller do
     end
 
     context 'if user is role is not admin' do
-      let(:teacher_user) { FactoryBot.create(:user, role: 'teacher') }
-      let(:token) { JWT.encode({ sub: teacher_user.id, exp: 1.day.from_now.to_i }, 'your_secret_key') }
 
       before do
-        request.headers['token'] = token
+        request.headers['token'] = token_teacher
       end
 
       it 'returns unauthorized status' do
